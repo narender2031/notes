@@ -104,29 +104,30 @@ class NoteController < ApplicationController
         if @note.present?
             @note.hash_tags.delete_all
             @note.delete
+            if HashTagsNote.count != 0
+                HashTagsNote.all.order(created_at: "desc").group_by(&:updated_at).values.each do |a|
+                    if a.length == 1
+                        puts "Hello"
+                        @tags.push(HashTag.find(a[0].hash_tag_id))
+                    else
+                        temp = 0
+                      a.each do |hash_tag|
+                        count =  HashTagsNote.where(hash_tag_id: hash_tag.hash_tag_id).count
+                        @count.push({id: hash_tag.hash_tag_id, count: count})
+                      end
+                    end
+                end
+                @count.uniq! {|u| u[:id]}
+                @sorted = @count.sort_by { |hsh| hsh[:count] }.reverse
+                @sorted.each do |hash|
+                    @tags.push(HashTag.find(hash[:id]))
+                end
+            end
             respond_to do |format|
                 format.js {render "update.js.erb" }
             end
         end
-        if HashTagsNote.count != 0
-            HashTagsNote.all.order(created_at: "desc").group_by(&:updated_at).values.each do |a|
-                if a.length == 1
-                    puts "Hello"
-                    @tags.push(HashTag.find(a[0].hash_tag_id))
-                else
-                    temp = 0
-                  a.each do |hash_tag|
-                    count =  HashTagsNote.where(hash_tag_id: hash_tag.hash_tag_id).count
-                    @count.push({id: hash_tag.hash_tag_id, count: count})
-                  end
-                end
-            end
-            @count.uniq! {|u| u[:id]}
-            @sorted = @count.sort_by { |hsh| hsh[:count] }.reverse
-            @sorted.each do |hash|
-                @tags.push(HashTag.find(hash[:id]))
-            end
-        end
+        
     end
 
     private
