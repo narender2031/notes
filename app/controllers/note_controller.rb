@@ -31,9 +31,9 @@ class NoteController < ApplicationController
           @hash_tag = note_params[:note].split()
           @hash_tag.each do |h_tag|
             if h_tag.start_with? "#"
-                @tag = HashTag.find_by(hash_tag: h_tag)
+                @tag = HashTag.find_by(hash_tag: h_tag.downcase)
                 if !@tag.present?
-                    @note.hash_tags.create(:hash_tag => h_tag)
+                    @note.hash_tags.create(:hash_tag => h_tag.downcase)
                 else
                     @note.hash_tags_notes.create(:note_id=> @note.id, hash_tag_id: @tag.id)
                 end
@@ -63,9 +63,9 @@ class NoteController < ApplicationController
                 @hash_tag = note_params[:note].split()
                 @hash_tag.each do |tag|
                     if tag.start_with? "#"
-                        @tag = HashTag.find_by(hash_tag: tag)
+                        @tag = HashTag.find_by(hash_tag: tag.downcase)
                         if !@tag.present?
-                            @note.hash_tags.create(:hash_tag => tag)
+                            @note.hash_tags.create(:hash_tag => tag.downcase)
                         else
                             @note.hash_tags_notes.create(:note_id=> @note.id, hash_tag_id: @tag.id)
                         end
