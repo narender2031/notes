@@ -1,0 +1,54 @@
+<div class="row">
+    <% notes.each do |note|%>
+        <div class="col-md-12" style="margin-top: 20px;">
+            <div class="col-md-7 col-sm-6 col-xs-12">
+                <div class="note_message">
+                    <p class="show_note"><%= note.note %></p>
+                </div>
+                <div class="display_form", style ="display:none">
+                    <%= form_for note, url: notes_path, method: "patch", remote: true  do |f|%>
+                        <fieldset>
+                            <div class="col-md-10 col-sm-10 col-xs-12">
+                                <%= f.text_area :note, class:"note-field" %>
+                                <%= f.hidden_field :id, class:"", value: note.id %>
+                            </div>
+                            <div class="col-md-2 col-sm-2 col-xs-12">
+                                <%= f.submit class:"update-note" %>
+                            </div>
+                        </fieldset>
+                    <% end %>
+                </div>
+                <button class="cancel_edit" style="display:none">Cancel</button>
+            </div>
+            <div class="col-md-5 col-sm-6 col-xs-12">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="col-md-6 col-sx-6 col-sm-6">
+                            <%= link_to delete_path(id: note), class: "delete_button" , remote: true do %><i class="fa fa-trash"></i><% end %>
+                        </div>
+                        <div class="col-md-6 col-sx-6 col-sm-6">
+                            <button class="edit-note"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <% end %>
+</div>
+<script>
+$(".edit-note").on('click', function(){
+    $(this).parent().parent().parent().parent().prev().children(".note_message").css("display", "none");
+    $(this).parent().parent().parent().parent().prev().children(".display_form").css("display", "block");
+    $(this).parent().parent().parent().parent().prev().children(".cancel_edit").css("display", "block");
+    $(this).css("display","none");
+    $(this).parent().prev().children().css("display","none")
+})
+
+$(".cancel_edit").on('click', function(){
+    $(this).css("display", "none");
+    $(this).prev().css("display", "none");
+    $(this).prev().prev(".note_message").css("display", "block")
+    $(this).parent().next().children().children().children().children().css("display", "block");
+    $(this).parent().next().children().children().children().next().children().css("display", "block");
+})
+</script>

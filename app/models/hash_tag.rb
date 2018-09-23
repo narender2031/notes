@@ -1,3 +1,4 @@
 class HashTag < ApplicationRecord
-    has_and_belongs_to_many :notes
+    has_many :hash_tags_notes
+    has_many :notes, through: :hash_tags_notes, dependent: :destroy
 end

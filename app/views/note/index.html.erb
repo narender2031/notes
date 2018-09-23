@@ -1,0 +1,42 @@
+<meta name="viewport" content="width= device-width initail-scale=1" />
+<body class="dash-body nav-sm" id="dash">
+    <div class="container body">
+        <div class="main_container">
+            <%= render partial: "layouts/left_col", :locals => {active: "Note"} %>
+            <%= render partial: "layouts/nav_bar", :locals => {active: "Note"} %>
+            <div class="right_col">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="col-md-2 col-sm-6 col-xs-12">
+                            <div class="x_panel tile fixed_height_320">
+                                <div class="x_title">
+                                    <h2 class="title">HashTags</h2>
+                                <div class="clearfix"></div>
+                                </div>
+                                <div class="x_content">
+                                    <div class="tags">
+                                        <%= render partial: "hash_tag.html.erb", locals: {tags: @tags.uniq} %>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-10 col-sm-6 col-xs-12">
+                            <div class="x_panel tile fixed_height_320">
+                                <div class="x_title">
+                                    <h2 class="title">Notes</h2>
+                                <div class="clearfix"></div>
+                                <div class="x_content">
+                                    <div class="notes">
+                                        <% if @notes.present?%>
+                                            <%= render partial: "note.html.erb" %>
+                                        <% end %>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

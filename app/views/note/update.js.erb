@@ -1,0 +1,2 @@
+$('.notes').html("")
+$('.tags').html("<%= escape_javascript(render partial: 'hash_tag.html.erb', locals: {tags: @tags.uniq})%>")

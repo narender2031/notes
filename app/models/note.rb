@@ -1,3 +1,5 @@
 class Note < ApplicationRecord
-    has_and_belongs_to_many :hash_tags
+    has_many :hash_tags_notes
+    has_many :hash_tags, through: :hash_tags_notes, dependent: :destroy
+
 end

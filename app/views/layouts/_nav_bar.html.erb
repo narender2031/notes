@@ -1,0 +1,51 @@
+<div class="top_nav">
+  <div class="nav_menu nav-white">
+    <nav>
+      <div class="">
+        <% if active == "Note" || active == "Note" %>
+          <div class"row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+              <div class="col-md-6 col-sm-6 col-xs-6">
+                <button type="button" class="btn btn-primary create_note_button" data-toggle="modal" data-target="#exampleModal">
+                  Create New Note
+                </button>
+              </div>
+            </div>
+          </div> 
+        <% end %>
+      </div>    
+    </nav>
+  </div>
+</div>
+
+<%# modal code  %>
+<% if active == "Note" || active == "Note" %>
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title note-title" id="exampleModalLabel">Create Note</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <%= form_for @note, url: notes_path do |f| %>
+            <fieldset>
+              <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                  <%= f.text_area :note, class: "", placeholder: "e.g I have great day today #great ......" %>
+                </div>
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                  <center>
+                    <%= f.submit "Submit", class:"submit-note" %>
+                  </center>
+                </div>
+              </div>
+            </fieldset>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
