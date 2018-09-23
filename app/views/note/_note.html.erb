@@ -9,7 +9,7 @@
                     <%= form_for note, url: notes_path, method: "patch", remote: true  do |f|%>
                         <fieldset>
                             <div class="col-md-10 col-sm-10 col-xs-12">
-                                <%= f.text_area :note, class:"note-field" %>
+                                <%= f.text_area :note, class:"note-field", required: true %>
                                 <%= f.hidden_field :id, class:"", value: note.id %>
                             </div>
                             <div class="col-md-2 col-sm-2 col-xs-12">
