@@ -101,6 +101,13 @@ class NoteController < ApplicationController
         @note = Note.find(params[:id])
         @tags = []
         @count = []
+        if @note.present?
+            @note.hash_tags.delete_all
+            @note.delete
+            respond_to do |format|
+                format.js {render "update.js.erb" }
+            end
+        end
         if HashTagsNote.count != 0
             HashTagsNote.all.order(created_at: "desc").group_by(&:updated_at).values.each do |a|
                 if a.length == 1
@@ -118,13 +125,6 @@ class NoteController < ApplicationController
             @sorted = @count.sort_by { |hsh| hsh[:count] }.reverse
             @sorted.each do |hash|
                 @tags.push(HashTag.find(hash[:id]))
-            end
-        end
-        if @note.present?
-            @note.hash_tags.delete_all
-            @note.delete
-            respond_to do |format|
-                format.js {render "update.js.erb" }
             end
         end
     end
