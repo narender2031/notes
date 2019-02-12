@@ -7,7 +7,6 @@ class NoteController < ApplicationController
         if HashTagsNote.count != 0
             HashTagsNote.all.order(created_at: "desc").group_by(&:updated_at).values.each do |a|
                 if a.length == 1
-                    puts "Hello"
                     @tags.push(HashTag.find(a[0].hash_tag_id))
                 else
                     temp = 0
